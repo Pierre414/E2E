@@ -1,22 +1,26 @@
-class Dollar {
-    amount: number;
+export class Money {
 
-    constructor(amount: number) {
+    protected amount: number
+    protected currency:String
+
+    constructor(amount: number,currency:String) {
         this.amount = amount
     }
-    times(multiplier): void {
+    public times(multiplier: number) {
         this.amount *= multiplier;
+        return this.amount;
     }
-    five: Dollar = new Dollar(5);
-
-    functions = {
-        testnmultiplication() {
-            this.five.times(2)
-        }
-
+    public getamount(): number {
+        return this.amount  
     }
+    public getcurrency():String{
+        return this.currency;
+    }
+    public equals(obj: Money): boolean {
+        return this.currency==obj.getcurrency() && this.amount==obj.getamount();
+        
+     }                          
 
+
+ 
 }
-module.exports = functions;
-
-
