@@ -1,5 +1,5 @@
  import { Sum } from "./Sum";
-// import { Franc } from "./Franc";
+
 
 
 export interface Expression{}
@@ -25,7 +25,7 @@ export class Money implements Expression {
   }
   public francTimes(multiplier: number) {
       this.amount=this.amount*multiplier;
-      return Money.dollar(this.amount,'CHF');
+      return Money.franc(this.amount,'CHF');
   }
   public getAmount(): number {
     return this.amount;
