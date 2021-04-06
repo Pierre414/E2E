@@ -1,41 +1,43 @@
-// import { Dollar } from "./Dollar";
+ import { Sum } from "./Sum";
 // import { Franc } from "./Franc";
 
-export class Money {
-  protected amount: number;
-  protected currency: String;
+
+export interface Expression{}
+export class Money implements Expression {
+  private amount: number;
+  private currency: String;
+   
 
   constructor(amount: number, currency: String) {
     this.amount = amount;
+    this.currency=currency;
+   
   }
-  public dollartimes(multiplier: number) {
-    this.amount *= multiplier;
-    this.currency="USD";
-    return this.currency
+  static dollar(amount: number, currency: String='USD'): Money {
+    return new Money(amount, 'USD');
+  }
+  static franc(amount: number,currency:String='CHF'): Money {
+    return new Money(amount,'CHF');
+  }
+  public dollarTimes(multiplier: number) {
+    this.amount = this.amount * multiplier;
+    return Money.dollar(this.amount, "USD");
+  }
+  public francTimes(multiplier: number) {
+      this.amount=this.amount*multiplier;
+      return Money.dollar(this.amount,'CHF');
+  }
+  public getAmount(): number {
     return this.amount;
   }
-  public franctimes(multiplier: number) {
-    this.amount *= multiplier;
-    this.currency="CHF";
-    return this.currency
-    return this.amount;
-  }
-  public getamount(): number {
-    return this.amount;
-  }
-  public getcurrency(): String {
+  public getCurrency(): String {
     return this.currency;
   }
-  static dollar(amount: number, currency: String): Money {
-    return new Money(amount, currency);
-  }
-  static franc(amount: number, currency: String): Money {
-    return new Money(amount, currency);
-  }
+
   public equals(obj: Money): boolean {
-    return this.currency == obj.getcurrency() && this.amount == obj.getamount();
+    return this.currency == obj.getCurrency() && this.amount == obj.getAmount();
   }
-  public plus(addend:Money):Money{
-      return new Money(this.amount+addend.amount,this.currency);
+  plus(addend: Money): Expression {
+    return new Sum(this, addend);
   }
 }
