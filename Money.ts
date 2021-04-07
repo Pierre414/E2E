@@ -21,7 +21,7 @@ export class Money implements Expression {
   }
  
   public times(multiplier:number){
-   const amount=this.amount*multiplier;
+  const amount=this.amount*multiplier;
    return new Money(amount,this.currency);
   }
   public getAmount(): number {
