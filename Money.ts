@@ -19,13 +19,10 @@ export class Money implements Expression {
   static franc(amount: number,currency:String='CHF'): Money {
     return new Money(amount,'CHF');
   }
-  public dollarTimes(multiplier: number) {
-    this.amount = this.amount * multiplier;
-    return Money.dollar(this.amount, "USD");
-  }
-  public francTimes(multiplier: number) {
-      this.amount=this.amount*multiplier;
-      return Money.franc(this.amount,'CHF');
+ 
+  public times(multiplier:number){
+   const amount=this.amount*multiplier;
+   return new Money(amount,this.currency);
   }
   public getAmount(): number {
     return this.amount;
