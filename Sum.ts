@@ -6,11 +6,11 @@ export class Sum implements Expression{
     addend:Money;
 
     constructor(augend:Money,addend:Money){
-        this.addend=addend;
-        this.augend=augend;
+        this.addend = addend;
+        this.augend = augend;
     }
     public reduce(bank:Bank,to:String):Money{
-        let amount:number=this.augend.getAmount()+this.addend.getAmount();
+        let amount:number = this.augend.getAmount() + this.addend.getAmount();
         return new Money(amount,to)
     }
 }

@@ -30,7 +30,7 @@ describe("The Money Object", () => {
 
   test("fievFranc stay fiveFranc", () => {
     const fiveFranc = Money.franc(5);
-    const tenFranc = fiveFranc.times(3);
+    fiveFranc.times(3);
     expect(fiveFranc.getAmount()).toBe(5);
   });
 
@@ -57,28 +57,27 @@ describe("The Money Object", () => {
 
   test("Plus returns Sum",()=>{
     const five=Money.dollar(5);
-    let result=five.plus(five);
-    let sum:Sum=result;
+    let sum:Sum=five.plus(five);
     expect(five).toEqual(sum.addend && sum.augend);
   });
 
   test("reduce Sum",()=>{
-    const sum:Expression=new Sum(Money.dollar(3),Money.dollar(4))
-    let bank=new Bank();
+    const sum=(Money.dollar(3).plus(Money.dollar(4)))
+    const bank = new Bank();
     const result:Money=bank.reduce(sum,'USD');
     expect(result).toEqual(Money.dollar(7));
   });
 
   test('reduce Money',()=>{
-    const bank=new Bank();
-    const result=bank.reduce(Money.dollar(1),'USD');
-    expect(result).toEqual(Money.dollar(1));
+    const bank = new Bank();
+    const addresult=bank.reduce(Money.dollar(1),'USD');
+    expect(addresult).toEqual(Money.dollar(1));
   });
 
   test('simple change',()=>{
-    const bank=new Bank();
+    const bank = new Bank();
     bank.addRate("CHF","USD",2);
-    let result=bank.reduce(Money.franc(2),"USD");
+    const result=bank.reduce(Money.franc(2),"USD");
     expect(result).toEqual(Money.dollar(1));
   });
 

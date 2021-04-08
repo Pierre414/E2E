@@ -7,10 +7,7 @@ export class Bank implements Expression{
       return source.reduce(this,to);
     }
     rate(from:String,to:String):number{
-        return(from.equals("CHF") && to.equals("USD"))
-        ?2
-        :1;
+        return(from == ("CHF") && to == ("USD")) ?2 :1;
     }
-    private rates:Hashtable=new Hashtable();
-        
+  
 }
