@@ -41,10 +41,10 @@ describe("The Money Object", () => {
   });
 
   test("Bank implementation", () => {
-    let five:Money=Money.dollar(5);
-    let sum:Expression=five.plus(five);
-    let bank:Bank=new Bank();
-    let reduced:Money=bank.reduce(sum,"USD");
+    const five=Money.dollar(5);
+    const sum=five.plus(five);
+    const bank=new Bank();
+    const reduced=bank.reduce(sum,"USD");
     expect(reduced).toEqual(Money.dollar(10));
 
   });
@@ -56,9 +56,31 @@ describe("The Money Object", () => {
   });
 
   test("Plus returns Sum",()=>{
-    let five:Money=Money.dollar(5);
-    let result:Expression=five.plus(five);
+    const five=Money.dollar(5);
+    let result=five.plus(five);
     let sum:Sum=result;
     expect(five).toEqual(sum.addend && sum.augend);
-  })
+  });
+
+  test("reduce Sum",()=>{
+    const sum:Expression=new Sum(Money.dollar(3),Money.dollar(4))
+    let bank=new Bank();
+    const result:Money=bank.reduce(sum,'USD');
+    expect(result).toEqual(Money.dollar(7));
+  });
+
+  test('reduce Money',()=>{
+    const bank=new Bank();
+    const result=bank.reduce(Money.dollar(1),'USD');
+    expect(result).toEqual(Money.dollar(1));
+  });
+
+  test('simple change',()=>{
+    const bank=new Bank();
+    bank.addRate("CHF","USD",2);
+    let result=bank.reduce(Money.franc(2),"USD");
+    expect(result).toEqual(Money.dollar(1));
+  });
+
+
 });

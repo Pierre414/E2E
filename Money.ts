@@ -1,11 +1,14 @@
- import { Sum } from "./Sum";
+ import { Bank } from "./Bank";
+import { Sum } from "./Sum";
 
 
 
-export interface Expression{}
+export interface Expression{
+  reduce(bank:Bank,to:String):Money;
+}
 export class Money implements Expression {
-  private amount: number;
-  private currency: String;
+  private readonly amount: number;
+  private readonly currency: String;
    
 
   constructor(amount: number, currency: String) {
@@ -32,9 +35,18 @@ export class Money implements Expression {
   }
 
   public equals(obj: Money): boolean {
+    let money:Money=obj;
     return this.currency == obj.getCurrency() && this.amount == obj.getAmount();
   }
   plus(addend: Money): Expression {
     return new Sum(this, addend);
   }
+
+  public reduce(bank:Bank,to:String):Money{
+    let rate:number=(this.currency.equals("CHF") && to.equals("USD"))
+    ?2
+    :1;
+    return new Money(this.amount/rate,to);
+  }
+
 }
