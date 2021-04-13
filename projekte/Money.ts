@@ -27,7 +27,7 @@ export class Money implements Expression {
     return new Money(amount, "Euro");
   }
 
-  public times(multiplier: number): Expression {
+  public times(multiplier: number):Money {
     return new Money(this.amount * multiplier, this.currency);
   }
 
@@ -44,7 +44,7 @@ export class Money implements Expression {
     return this.currency == obj.getCurrency() && this.amount == obj.getAmount();
   }
 
-  public plus(addend: Expression): Expression {
+  public plus(addend: Expression): Sum{
     return new Sum(this, addend);
   }
 

@@ -75,39 +75,45 @@ describe("The Money Object", () => {
 
   test("from Franc to Dollar", () => {
     const bank = new Bank();
+    bank.setRate({from:"CHF",to:"USD"},2);
     const result = bank.reduce(Money.franc(2), "USD");
     expect(result).toEqual(Money.dollar(1));
   });
 
   test("Franc to Euro", () => {
     const bank = new Bank();
+    bank.setRate({from:"CHF",to:"Euro"},3);
     const result = bank.reduce(Money.franc(6), "Euro");
     expect(result).toEqual(Money.euro(2));
   });
 
   test("Mixed Addition", () => {
-    const fifteenFranc: Expression = Money.franc(15);
-    const fiveEuro: Expression = Money.euro(5);
+    const fifteenFranc= Money.franc(15);
+    const fiveEuro = Money.euro(5);
     const bank = new Bank();
-    const result = bank.reduce(fiveEuro.plus(fifteenFranc), "Euro");
-    expect(result).toEqual(Money.euro(10));
+    bank.setRate({from:"CHF",to:"Euro"},3);
+    const tenEuro = bank.reduce(fiveEuro.plus(fifteenFranc), "Euro");
+    expect(tenEuro).toEqual(Money.euro(10));
   });
 
-  test("Sum plus Money", () => {
+  test("Sum adds Money", () => {
     const fiveEuro = Money.euro(5);
     const fifteenFranc = Money.franc(15);
     const bank = new Bank();
-    const sum: Expression = new Sum(fiveEuro, fifteenFranc).plus(fiveEuro);
-    const result = bank.reduce(sum, "Euro");
-    expect(result).toEqual(Money.euro(15));
+    bank.setRate({from:"CHF",to:"Euro"},3);
+    const sum= new Sum(fiveEuro, fifteenFranc)
+    const addSum=sum.plus(fiveEuro);
+    const fifteenEuro = bank.reduce(addSum, "Euro");
+    expect(fifteenEuro).toEqual(Money.euro(15));
   });
 
-  test("Sum plus Money", () => {
+  test("Sum times 2 is equal 20", () => {
     const fiveEuro = Money.euro(5);
     const fifteenFranc = Money.franc(15);
     const bank = new Bank();
-    const sum: Expression = new Sum(fiveEuro, fifteenFranc).times(2);
-    const result = bank.reduce(sum, "Euro");
-    expect(result).toEqual(Money.euro(20));
+    bank.setRate({from:"CHF",to:"Euro"},3);
+    const sum= new Sum(fiveEuro, fifteenFranc).times(2);
+    const twentyEuro = bank.reduce(sum, "Euro");
+    expect(twentyEuro).toEqual(Money.euro(20));
   });
 });
